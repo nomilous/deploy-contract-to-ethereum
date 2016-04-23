@@ -86,7 +86,7 @@ Deployer.prototype.deployContract = function(senderKeyPair, contract, constructo
 
       web3.eth.sendRawTransaction(serializedTx.toString('hex'), function(error, transactionHash) {
         if (error) return reject(error);
-        console.log('...contract submitted - TX:', transactionHash);
+        // console.log('...contract submitted - TX:', transactionHash);
         var count = 0;
         var filter = web3.eth.filter('latest', function() {
           // for each block write, look for transaction receipt
@@ -97,20 +97,19 @@ Deployer.prototype.deployContract = function(senderKeyPair, contract, constructo
             if (receipt || count > 50) {
               if (!receipt) return reject(new Error('...gave up waiting for contract to be mined'));
               filter.stopWatching();
-              console.log('...contract mined');
-              console.log('====transaction=====');
-              console.log(JSON.stringify({
-                sender: senderAccount,
-                rawTx: rawTx,
-              }, null, 2));
-              console.log();
-              console.log('=======receipt=======');
-              console.log(JSON.stringify(receipt, null, 2));
-              console.log();
-              console.log('====== A B I =======');
-              console.log(JSON.stringify(contract.abi));
-              console.log();
-
+              // console.log('...contract mined');
+              // console.log('====transaction=====');
+              // console.log(JSON.stringify({
+              //   sender: senderAccount,
+              //   rawTx: rawTx,
+              // }, null, 2));
+              // console.log();
+              // console.log('=======receipt=======');
+              // console.log(JSON.stringify(receipt, null, 2));
+              // console.log();
+              // console.log('====== A B I =======');
+              // console.log(JSON.stringify(contract.abi));
+              // console.log();
               resolve(receipt);
             }
           });
