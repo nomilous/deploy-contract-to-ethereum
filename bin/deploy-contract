@@ -1,0 +1,47 @@
+#!/usr/bin/env node
+
+var path = require('path');
+
+// your ipc path will likely be different
+var IPC_PATH = process.env.HOME + '/ethereum/datadir/geth.ipc';
+var CONTRACT_FILE = path.dirname(path.dirname(__filename)) + '/contracts/greeter.sol';
+var CONTRACT_CONSTRUCTOR_PARAMS = ['Hello World!'];
+var GAS_LIMIT = 300000;
+
+var KEY_PAIR = {
+  PrivateKey: '3e8d42bf3328f728cb27f8a8c55bd575ad967aabc11c5a7fa77a912ee65d9824',
+  // PublicKey: '283edf57ce3aac6da2ca004870c44b1c8763cbc9db3150cb9125f36dc98b16dc',
+  // Account: '6b41859d5da286265bfe09c33e771434223d9de2',
+  // PublicKey is not needed (can be derived using ethereumjs-util)
+  // Account is needed (but will be derived from private key)
+  // Ensure Account has ether
+}
+
+var Deployer = require('../');
+var deployer = new Deployer(IPC_PATH);
+var compiledContract, gasPrice, deployedContract;
+
+deployer.compileContract(CONTRACT_FILE)
+
+.then(function(_compiledContract) {
+  compiledContract = _compiledContract;
+  return deployer.getCurrentGasPrice();
+})
+
+.then(function(_gasPrice) {
+  gasPrice = _gasPrice;
+  return deployer.deployContract(KEY_PAIR, compiledContract, CONTRACT_CONSTRUCTOR_PARAMS, gasPrice, GAS_LIMIT)
+})
+
+.then(function(_deployedContract) {
+  deployedContract = _deployedContract;
+})
+
+.then(function() {
+  process.exit(0);
+})
+
+.catch(function(error) {
+  console.error(error);
+  process.exit(1);
+});
