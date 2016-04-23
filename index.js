@@ -17,6 +17,11 @@ function Deployer(ipcPath) {
 
   // using IpcProvider because some critical functionalities don't work over http
 
+  if (global.web3) {
+    this.web3 = global.web3;
+    return;
+  }
+
   var provider = new Web3.providers.IpcProvider(ipcPath, net);
   this.web3 = new Web3(provider);
 }

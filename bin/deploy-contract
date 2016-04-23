@@ -3,7 +3,7 @@
 var path = require('path');
 
 // your ipc path will likely be different
-var IPC_PATH = process.env.HOME + '/ethereum/datadir/geth.ipc';
+var IPC_PATH = process.env.HOME + '/.ethereum/geth.ipc';
 var CONTRACT_FILE = path.dirname(path.dirname(__filename)) + '/contracts/greeter.sol';
 var CONTRACT_CONSTRUCTOR_PARAMS = ['Hello World!'];
 var GAS_LIMIT = 300000;
