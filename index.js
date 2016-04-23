@@ -115,6 +115,8 @@ Deployer.prototype.deployContract = function(senderKeyPair, contract, constructo
               // console.log('====== A B I =======');
               // console.log(JSON.stringify(contract.abi));
               // console.log();
+
+              receipt.sender = senderAccount; // just because
               resolve(receipt);
             }
           });
